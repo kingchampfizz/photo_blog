@@ -9,6 +9,7 @@
       --beige: #f5f5dc;
       --light-yellow: #fff9c4;
       --white: #ffffff;
+      --light-gray: #eeeeee;
       --text: #333;
     }
 
@@ -17,56 +18,99 @@
       font-family: 'Helvetica Neue', sans-serif;
       background-color: var(--white);
       color: var(--text);
-      line-height: 1.6;
     }
 
     header {
       background-color: var(--beige);
       padding: 2rem;
       text-align: center;
-      border-bottom: 2px solid #e0e0e0;
+      border-bottom: 1px solid #ccc;
     }
 
     header h1 {
       margin: 0;
-      font-size: 2rem;
+      font-size: 2.5rem;
     }
 
-    main {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 0 1rem;
+    nav {
+      margin-top: 1rem;
+      font-size: 1rem;
     }
 
-    article {
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      margin: 0 1rem;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #888;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 3rem 2rem;
+      background-color: var(--light-gray);
+    }
+
+    .photo {
       background-color: var(--light-yellow);
-      padding: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-      margin-bottom: 2rem;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      transform: translateY(30px);
+      transition: all 0.6s ease-out;
     }
 
-    article.visible {
+    .photo.visible {
       opacity: 1;
       transform: translateY(0);
     }
 
-    article h2 {
-      margin-top: 0;
-    }
-
-    article img {
-      max-width: 100%;
+    .photo img {
+      width: 100%;
       height: auto;
       border-radius: 5px;
+      transition: transform 0.3s ease;
+    }
+
+    .photo img:hover {
+      transform: scale(1.03);
+    }
+
+    .caption {
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+      text-align: center;
+      color: #555;
+    }
+
+    #about {
+      background-color: var(--white);
+      padding: 4rem 2rem;
+      text-align: center;
+      color: #444;
+    }
+
+    #about h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    #about p {
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1rem;
+      line-height: 1.6;
     }
 
     footer {
       text-align: center;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       padding: 2rem 1rem;
       background-color: var(--beige);
       color: #777;
@@ -76,21 +120,31 @@
 <body>
   <header>
     <h1>My Photography Blog</h1>
-    <p>Capturing moments in beige and light</p>
+    <nav>
+      <a href="#gallery">Gallery</a>
+      <a href="#about">About</a>
+    </nav>
   </header>
 
   <main>
-    <article>
-      <h2>Golden Light</h2>
-      <p>Shot during the golden hour on a quiet beach walk.</p>
-      <img src="photo_blog/assets/img/bike.JPG" alt="Golden Light">
-    </article>
+    <section class="gallery" id="gallery">
+      <div class="photo">
+        <img src="assets/img/bike.JPG" alt="Golden Hour">
+        <p class="caption">Golden Hour</p>
+      </div>
+      <div class="photo">
+        <img src="assets/img/lamp.JPG" alt="Morning Dew">
+        <p class="caption">Morning Dew</p>
+      </div>
+      <!-- Add more photos here -->
+    </section>
 
-    <article>
-      <h2>Morning Dew</h2>
-      <p>A crisp capture of early dew glistening on fresh grass.</p>
-      <img src="assets/img/lamp.JPG" alt="Morning Dew">
-    </article>
+    <section id="about">
+      <h2>About Me</h2>
+      <p>
+        I'm a minimalist photographer inspired by natural light, soft colors, and everyday beauty. This blog is a visual diary of the serene, the subtle, and the soft.
+      </p>
+    </section>
   </main>
 
   <footer>
@@ -98,8 +152,7 @@
   </footer>
 
   <script>
-    const articles = document.querySelectorAll('article');
-
+    const photos = document.querySelectorAll('.photo');
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -110,10 +163,7 @@
     }, {
       threshold: 0.1
     });
-
-    articles.forEach(article => {
-      observer.observe(article);
-    });
+    photos.forEach(photo => observer.observe(photo));
   </script>
 </body>
 </html>
