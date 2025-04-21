@@ -44,6 +44,14 @@
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.05);
       margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    article.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     article h2 {
@@ -75,19 +83,37 @@
     <article>
       <h2>Golden Light</h2>
       <p>Shot during the golden hour on a quiet beach walk.</p>
-      <img src="photo_blog/assets/img/lamp.JPG" alt="Golden Light">
+      <img src="photo_blog/assets/img/bike.JPG" alt="Golden Light">
     </article>
 
     <article>
       <h2>Morning Dew</h2>
       <p>A crisp capture of early dew glistening on fresh grass.</p>
-      <img src="assets/img/mwee.JPG" alt="Morning Dew">
+      <img src="assets/img/lamp.JPG" alt="Morning Dew">
     </article>
   </main>
 
   <footer>
     &copy; 2025 My Photography Blog
   </footer>
+
+  <script>
+    const articles = document.querySelectorAll('article');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    articles.forEach(article => {
+      observer.observe(article);
+    });
+  </script>
 </body>
 </html>
-
